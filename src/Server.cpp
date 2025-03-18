@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
         const std::string blob_sha = value.substr(2);
 
         std::string path = ".git/objects/" + dir_name + "/" + blob_sha;
-        zstr::ifstream input(path, std::ofstream::binary);
+        zstr::ifstream input(path, std::ifstream::binary);
         if (!input.is_open())
         {
             std::cerr << "Failed to open file " << path << '\n';
