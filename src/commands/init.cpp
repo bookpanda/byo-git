@@ -1,4 +1,7 @@
 #include "init.hpp"
+#include <iostream>
+#include <filesystem>
+#include <fstream>
 
 void initialize_git()
 {
