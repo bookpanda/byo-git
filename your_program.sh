@@ -8,6 +8,7 @@
 
 set -e # Exit early if any commands fail
 
+VCPKG_ROOT="/Users/idhibhatpankam/vcpkg"
 # Copied from .codecrafters/compile.sh
 #
 # - Edit this to change how your program compiles locally

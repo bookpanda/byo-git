@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    // Flush after every std::cout / std::cerr
+    // Flush after every std::cout / std::cerr i.e. output will be printed on console immediately.
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
 
