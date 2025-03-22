@@ -64,3 +64,8 @@ mygit init
 
 vcpgk install
 ```
+
+## Pushing to remote
+```bash
+git push -u origin main
+```
