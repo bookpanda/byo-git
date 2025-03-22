@@ -57,3 +57,10 @@ alias mygit=/path/to/your/repo/your_program.sh
 mkdir -p /tmp/testing && cd /tmp/testing
 mygit init
 ```
+
+## Installing packages
+```bash
+# add packages in vcpkg.json
+
+vcpgk install
+```

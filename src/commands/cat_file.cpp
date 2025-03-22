@@ -9,7 +9,7 @@ void print_usage()
     std::cerr << "Usage: <program> cat-file -p <blob_sha>\n";
 }
 
-bool validate_args(int argc, char *argv[])
+bool validate_cat_file_args(int argc, char *argv[])
 {
     if (argc <= 3)
     {
@@ -50,7 +50,7 @@ std::string read_object_content(const std::string &path)
 
 void handle_cat_file(int argc, char *argv[])
 {
-    if (!validate_args(argc, argv))
+    if (!validate_cat_file_args(argc, argv))
     {
         return;
     }

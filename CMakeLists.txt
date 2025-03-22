@@ -27,12 +27,13 @@ file(GLOB_RECURSE SOURCE_FILES src/*.cpp src/*.hpp)
 # Add executable
 add_executable(git ${SOURCE_FILES})
 
-# Link libraries
-target_link_libraries(git PRIVATE ZLIB::ZLIB)
+find_package(OpenSSL REQUIRED)
+include_directories(${OPENSSL_INCLUDE_DIR})
+target_link_libraries(git PRIVATE ZLIB::ZLIB OpenSSL::Crypto)
+
 
 # Link the zstr headers
 target_include_directories(git PRIVATE ${ZSTR_INCLUDE_DIRS})
-
 
 # cmake_minimum_required(VERSION 3.13)
 
