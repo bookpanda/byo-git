@@ -3,6 +3,7 @@
 #include <zstr.hpp>
 #include <openssl/sha.h>
 #include <iomanip>
+#include <filesystem>
 
 bool validateHashObjectArgs(int argc, char *argv[])
 {
