@@ -3,7 +3,8 @@
 #include <fstream>
 #include <string>
 #include "./commands/init.hpp"
-#include "./commands/catfile.hpp"
+#include "./commands/cat_file.hpp"
+#include "./commands/hash_object.hpp"
 #include <zstr.hpp>
 
 int main(int argc, char *argv[])
@@ -31,6 +32,10 @@ int main(int argc, char *argv[])
     else if (command == "cat-file")
     {
         handle_cat_file(argc, argv);
+    }
+    else if (command == "hash-object")
+    {
+        handle_hash_object(argc, argv);
     }
     else
     {
