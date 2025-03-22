@@ -1,7 +1,7 @@
 #include "hash_object.hpp"
 #include <iostream>
 #include <zstr.hpp>
-#include <openssl/sha.h>
+#include <openssl/evp.h>
 #include <iomanip>
 #include <filesystem>
 
@@ -55,18 +55,38 @@ std::string createBlob(const std::string &filePath)
 
 std::string computeSHA1(const std::string &blob)
 {
-    SHA_CTX sha1; // init sha1 context
-    SHA1_Init(&sha1);
-    SHA1_Update(&sha1, blob.data(), blob.size());
+    EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
+    if (!mdctx)
+    {
+        std::cerr << "Failed to create EVP_MD_CTX\n";
+        return "";
+    }
 
-    unsigned char hash[SHA_DIGEST_LENGTH];
-    SHA1_Final(hash, &sha1); // computed sha1 hash here as 20-byte binary hash
+    if (EVP_DigestInit_ex(mdctx, EVP_sha1(), nullptr) != 1 ||
+        EVP_DigestUpdate(mdctx, blob.data(), blob.size()) != 1) // processes the data in chunks, allowing you to hash large inputs incrementally
+    {
+        std::cerr << "SHA1 computation failed\n";
+        EVP_MD_CTX_free(mdctx);
+        return "";
+    }
+
+    // computed sha1 hash here as 20-byte binary hash
+    unsigned char hash[EVP_MAX_MD_SIZE];
+    unsigned int hashLen;
+    if (EVP_DigestFinal_ex(mdctx, hash, &hashLen) != 1) // finalizes the computation and stores the result in hash
+    {
+        std::cerr << "SHA1 computation failed\n";
+        EVP_MD_CTX_free(mdctx);
+        return "";
+    }
+
+    EVP_MD_CTX_free(mdctx); // cleanup
 
     // {0x3a, 0x5b, 0xff, 0x10, ...} => "3a5bff10..."
     std::ostringstream hash_str;
-    for (unsigned char c : hash) // convert hash into 40-character hex string
+    for (unsigned int i = 0; i < hashLen; i++) // convert hash into 40-character hex string
     {
-        hash_str << std::hex << std::setw(2) << std::setfill('0') << (int)c;
+        hash_str << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
     }
 
     return hash_str.str();
