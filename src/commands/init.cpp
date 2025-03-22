@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <fstream>
 
-void initialize_git()
+void initializeGit()
 {
     try
     {

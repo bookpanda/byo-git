@@ -27,15 +27,15 @@ int main(int argc, char *argv[])
 
     if (command == "init")
     {
-        initialize_git();
+        initializeGit();
     }
     else if (command == "cat-file")
     {
-        handle_cat_file(argc, argv);
+        handleCatFile(argc, argv);
     }
     else if (command == "hash-object")
     {
-        handle_hash_object(argc, argv);
+        handleHashObject(argc, argv);
     }
     else
     {

@@ -4,16 +4,16 @@
 #include <fstream>
 #include <zstr.hpp>
 
-void print_usage()
+void printUsage()
 {
     std::cerr << "Usage: <program> cat-file -p <blob_sha>\n";
 }
 
-bool validate_cat_file_args(int argc, char *argv[])
+bool validateCatFileArgs(int argc, char *argv[])
 {
     if (argc <= 3)
     {
-        print_usage();
+        printUsage();
         return false;
     }
 
@@ -26,14 +26,14 @@ bool validate_cat_file_args(int argc, char *argv[])
     return true;
 }
 
-std::string extract_blob_sha(const std::string &value)
+std::string extractBlobSHA(const std::string &value)
 {
-    const std::string dir_name = value.substr(0, 2);
-    const std::string blob_sha = value.substr(2);
-    return ".git/objects/" + dir_name + "/" + blob_sha;
+    const std::string dirName = value.substr(0, 2);
+    const std::string blobSHA = value.substr(2);
+    return ".git/objects/" + dirName + "/" + blobSHA;
 }
 
-std::string read_object_content(const std::string &path)
+std::string readObjectContent(const std::string &path)
 {
     zstr::ifstream input(path, std::ofstream::binary);
     if (!input.is_open())
@@ -48,16 +48,16 @@ std::string read_object_content(const std::string &path)
     return object_str;
 }
 
-void handle_cat_file(int argc, char *argv[])
+void handleCatFile(int argc, char *argv[])
 {
-    if (!validate_cat_file_args(argc, argv))
+    if (!validateCatFileArgs(argc, argv))
     {
         return;
     }
 
     const std::string value = argv[3];
-    const std::string path = extract_blob_sha(value);
-    const std::string object_str = read_object_content(path);
+    const std::string path = extractBlobSHA(value);
+    const std::string object_str = readObjectContent(path);
 
     if (!object_str.empty())
     {

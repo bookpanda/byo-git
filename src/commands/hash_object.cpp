@@ -3,7 +3,7 @@
 #include <zstr.hpp>
 #include <openssl/sha.h>
 
-bool validate_hash_object_args(int argc, char *argv[])
+bool validateHashObjectArgs(int argc, char *argv[])
 {
     if (argc <= 2)
     {
@@ -22,12 +22,31 @@ bool validate_hash_object_args(int argc, char *argv[])
     return true;
 }
 
-std::string compute_sha1(const std::string &file_path)
+std::string createBlob(const std::string &filePath)
 {
-    std::ifstream file(file_path, std::ios::binary);
+    std::ifstream file(filePath, std::ios::binary);
     if (!file.is_open())
     {
-        std::cerr << "Failed to open file " << file_path << '\n';
+        std::cerr << "Failed to open file " << filePath << '\n';
+        return "";
+    }
+
+    std::ostringstream contentStream;
+    char buffer[8192]; // Read file in chunks
+    while (file.read(buffer, sizeof(buffer)) || file.gcount() > 0)
+    {
+        contentStream.write(buffer, file.gcount());
+    }
+
+    std::string content = contentStream.str();
+}
+
+std::string computeSHA1(const std::string &filePath)
+{
+    std::ifstream file(filePath, std::ios::binary);
+    if (!file.is_open())
+    {
+        std::cerr << "Failed to open file " << filePath << '\n';
         return "";
     }
 
@@ -54,17 +73,17 @@ std::string compute_sha1(const std::string &file_path)
     return hash_str.str();
 }
 
-void handle_hash_object(int argc, char *argv[])
+void handleHashObject(int argc, char *argv[])
 {
-    if (!validate_hash_object_args(argc, argv))
+    if (!validateHashObjectArgs(argc, argv))
         return;
 
-    std::string file_path = argv[2];
+    std::string filePath = argv[2];
     if (argc == 4)
-        file_path = argv[3];
+        filePath = argv[3];
 
     const std::string flag = (argc == 4) ? argv[2] : "";
-    const std::string hash = compute_sha1(file_path);
+    const std::string hash = computeSHA1(filePath);
 
     std::cout << hash << '\n';
 
