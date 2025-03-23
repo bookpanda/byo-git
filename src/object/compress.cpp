@@ -1,6 +1,7 @@
 #include "object.hpp"
 #include <iostream>
 #include <zlib.h>
+#include <zstr.hpp>
 
 std::string decompressBlob(const std::string &compressedData)
 {
@@ -27,4 +28,18 @@ std::string decompressBlob(const std::string &compressedData)
     }
 
     return buf;
+}
+
+std::string compressBlob(const std::string &blob)
+{
+    uLongf compressedSize = compressBound(blob.size()); // upper bound on compressed size
+    std::vector<Bytef> compressedData(compressedSize);
+    if (compress2(compressedData.data(), &compressedSize, (const Bytef *)blob.data(), blob.size(), Z_BEST_COMPRESSION) != Z_OK)
+    {
+        std::cerr << "Failed to compress blob content\n";
+        return "";
+    }
+
+    // construct a string from the compressed data
+    return std::string(reinterpret_cast<char *>(compressedData.data()), compressedSize);
 }

@@ -1,6 +1,5 @@
 #include "commands.hpp"
 #include "../init/init.hpp"
-#include "hash_object.hpp"
 #include "../object/object.hpp"
 #include "validate.hpp"
 

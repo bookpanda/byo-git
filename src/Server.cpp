@@ -1,10 +1,5 @@
 #include <iostream>
-#include <filesystem>
-#include <fstream>
-#include <string>
 #include "./commands/commands.hpp"
-#include "./commands/hash_object.hpp"
-#include <zstr.hpp>
 
 int main(int argc, char *argv[])
 {

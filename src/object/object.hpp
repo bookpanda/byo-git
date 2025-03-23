@@ -5,6 +5,7 @@
 
 // object
 std::string extractObjectSHA(const std::string &value);
+void writeObjectFile(const std::string &hash, const std::string &compressedBlob);
 
 // blob
 std::string readBlobContent(const std::string &path);
@@ -13,9 +14,11 @@ std::string createBlob(const std::string &filePath);
 // tree
 std::string readTreeContent(const std::string &path);
 
-std::string computeSHA1(const std::string &blob);
+// compress
 std::string decompressBlob(const std::string &compressedData);
 std::string compressBlob(const std::string &blob);
-void writeObjectFile(const std::string &hash, const std::string &compressedBlob);
+
+// sha
+std::string computeSHA1(const std::string &blob);
 
 #endif // OBJECT_H
