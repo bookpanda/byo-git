@@ -44,7 +44,7 @@ void handleHashObject(int argc, char *argv[])
     if (flag == "-w")
     {
         // compress blob content and write to .git/objects/<hash>
-        std::string compressedBlob = compressBlob(blob);
+        std::string compressedBlob = compressObject(blob);
         // std::cout << "compressedBlob: " << compressedBlob << '\n';
         if (!compressedBlob.empty())
         {

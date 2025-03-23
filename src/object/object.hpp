@@ -14,10 +14,11 @@ std::string createBlob(const std::string &filePath);
 
 // tree
 std::vector<std::vector<std::string>> readTreeContent(const std::string &path);
+std::string createTree(const std::string &path, int depth = 0);
 
 // compress
-std::string decompressBlob(const std::string &compressedData);
-std::string compressBlob(const std::string &blob);
+std::string decompressObject(const std::string &compressedData);
+std::string compressObject(const std::string &blob);
 
 // sha
 std::string computeSHA1(const std::string &blob);

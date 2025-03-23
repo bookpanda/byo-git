@@ -3,7 +3,7 @@
 #include <zlib.h>
 #include <zstr.hpp>
 
-std::string decompressBlob(const std::string &compressedData)
+std::string decompressObject(const std::string &compressedData)
 {
     std::string buf;
     buf.resize(compressedData.size());
@@ -30,7 +30,7 @@ std::string decompressBlob(const std::string &compressedData)
     return buf;
 }
 
-std::string compressBlob(const std::string &blob)
+std::string compressObject(const std::string &blob)
 {
     uLongf compressedSize = compressBound(blob.size()); // upper bound on compressed size
     std::vector<Bytef> compressedData(compressedSize);
