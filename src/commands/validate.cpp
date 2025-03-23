@@ -54,3 +54,27 @@ bool validateLsTreeArgs(int argc, char *argv[])
     }
     return true;
 }
+
+bool validateCommitTree(int argc, char *argv[])
+{
+    if (argc != 7)
+    {
+        std::cerr << "Usage: <program> commit-tree <tree_sha> -p <commit_sha> -m <message>\n";
+        return false;
+    }
+    const std::string flag = argv[3];
+    if (flag != "-p")
+    {
+        std::cerr << "Invalid parent commit flag for commit-tree, expected `-p`\n";
+        return false;
+    }
+
+    const std::string flag2 = argv[5];
+    if (flag2 != "-m")
+    {
+        std::cerr << "Invalid message flag for commit-tree, expected `-m`\n";
+        return false;
+    }
+
+    return true;
+}

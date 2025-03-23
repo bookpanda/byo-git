@@ -87,3 +87,9 @@ void handleWriteTree()
     const std::string treeHash = createTree(".");
     std::cout << treeHash << '\n';
 }
+
+void handleCommitTree(int argc, char *argv[])
+{
+    if (!validateCommitTree(argc, argv))
+        return;
+}

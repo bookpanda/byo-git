@@ -138,3 +138,14 @@ tree 192\0
 5 + 1 + 3 + 1 + 20
 192
 ```
+
+## Commiting
+```bash
+echo 'First commit' | git commit-tree 1d6753fb1a4263946e82a7ce64b7dcaa3191dfb2      
+# 3edf745f1d5d7d50ec8c70773b96755166e988c3
+
+git cat-file -p 1d6753fb1a4263946e82a7ce64b7dcaa3191dfb2
+# 040000 tree afe59fc8f3bee47e8b018d0072a688dff7f2b8b5    test_dir_1
+# 040000 tree 56280867b54d00c9c84b5440008ce95d464ed548    test_dir_2
+# 100644 blob 95d09f2b10159347eece71399a7e2e907ea3df4f    test_file_1.txt
+```
