@@ -23,5 +23,6 @@ std::string compressObject(const std::string &blob);
 // sha
 std::string computeSHA1(const std::string &blob);
 std::string SHA1ToHex(const std::string &binarySha);
+std::string hexToSHA1(const std::string &hex);
 
 #endif // OBJECT_H

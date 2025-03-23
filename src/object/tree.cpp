@@ -40,3 +40,62 @@ std::vector<std::vector<std::string>> readTreeContent(const std::string &path)
 
     return children;
 }
+
+std::string createTree(const std::string &path, int depth)
+{
+    try
+    {
+        int treeSize = 0;
+        std::vector<std::vector<std::string>> children;
+        for (const auto &entry : std::filesystem::directory_iterator(path))
+        {
+            std::string entryPath = entry.path().string();
+            std::string entryName = entry.path().filename().string();
+
+            if (entryName == ".git")
+                continue;
+
+            std::cout << std::string(depth * 2, ' ') // Indentation for depth
+                      << (entry.is_directory() ? "[DIR]  " : "[FILE] ")
+                      << entryName << "\n";
+
+            if (entry.is_directory())
+            {
+                auto hash = createTree(entryPath, depth + 1);
+                children.push_back({"tree", entryName, hexToSHA1(hash)});
+                treeSize += 6 + 1 + entryName.size() + 1 + 20;
+            }
+            else
+            {
+                auto blobContent = createBlob(entryPath);
+                auto hash = computeSHA1(blobContent);
+                writeObjectFile(hash, compressObject(blobContent));
+
+                children.push_back({"blob", entryName, hexToSHA1(hash)});
+                treeSize += 6 + 1 + entryName.size() + 1 + 20;
+                // mode, space, name, \0, SHA
+            }
+        }
+
+        std::string treeContent;
+        for (const auto &child : children)
+        {
+            if (child[0] == "tree")
+                treeContent += "040000 " + child[1] + '\0' + child[2];
+            else
+                treeContent += "100644 " + child[1] + '\0' + child[2];
+        }
+
+        treeContent = "tree " + std::to_string(treeSize) + '\0' + treeContent;
+        auto treeHash = computeSHA1(treeContent);
+        writeObjectFile(treeHash, compressObject(treeContent));
+        std::cout << "treeContent: " << treeContent << "\n";
+
+        return treeHash;
+    }
+    catch (const std::filesystem::filesystem_error &err)
+    {
+        std::cerr << "Error accessing path: " << err.what() << '\n';
+        return "";
+    }
+}

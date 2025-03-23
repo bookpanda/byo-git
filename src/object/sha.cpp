@@ -57,3 +57,16 @@ std::string SHA1ToHex(const std::string &binarySha)
 
     return hexSha;
 }
+
+// converts a 40-character SHA-1 hex string to a 20-byte hash
+std::string hexToSHA1(const std::string &hex)
+{
+    std::vector<unsigned char> bytes;
+    for (size_t i = 0; i < hex.length(); i += 2)
+    {
+        unsigned char byte = std::stoi(hex.substr(i, 2), nullptr, 16);
+        bytes.push_back(byte);
+    }
+
+    return std::string(bytes.begin(), bytes.end());
+}
