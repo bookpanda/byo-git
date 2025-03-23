@@ -1,6 +1,5 @@
 #include "commands.hpp"
 #include "../init/init.hpp"
-#include "cat_file.hpp"
 #include "hash_object.hpp"
 
 bool validateCatFileArgs(int argc, char *argv[])

@@ -1,7 +1,7 @@
 #include "commands.hpp"
 #include "../init/init.hpp"
-#include "cat_file.hpp"
 #include "hash_object.hpp"
+#include "../object/object.hpp"
 #include "validate.hpp"
 
 void handleInitGit()
@@ -15,8 +15,8 @@ void handleCatFile(int argc, char *argv[])
         return;
 
     const std::string value = argv[3];
-    const std::string path = extractBlobSHA(value);
-    const std::string object_str = readObjectContent(path);
+    const std::string path = extractObjectSHA(value);
+    const std::string object_str = readBlobContent(path);
 
     if (!object_str.empty())
     {
@@ -63,6 +63,6 @@ void handleLsTree(int argc, char *argv[])
         treeSHA = argv[3];
 
     const std::string flag = (argc == 4) ? argv[2] : "";
-    const std::string path = extractBlobSHA(treeSHA);
-    const std::string object_str = readObjectContent(path);
+    const std::string path = extractObjectSHA(treeSHA);
+    const std::string object_str = readTreeContent(path);
 }

@@ -3,9 +3,4 @@
 
 #include <iostream>
 
-std::string createBlob(const std::string &filePath);
-std::string computeSHA1(const std::string &blob);
-std::string compressBlob(const std::string &blob);
-void writeObjectFile(const std::string &hash, const std::string &compressedBlob);
-
 #endif // GIT_HASH_OBJECT_H

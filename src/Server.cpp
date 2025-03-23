@@ -3,7 +3,6 @@
 #include <fstream>
 #include <string>
 #include "./commands/commands.hpp"
-#include "./commands/cat_file.hpp"
 #include "./commands/hash_object.hpp"
 #include <zstr.hpp>
 
