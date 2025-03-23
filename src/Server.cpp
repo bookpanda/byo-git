@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
-#include "./commands/init.hpp"
+#include "./commands/commands.hpp"
 #include "./commands/cat_file.hpp"
 #include "./commands/hash_object.hpp"
 #include <zstr.hpp>
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
     if (command == "init")
     {
-        initializeGit();
+        handleInitGit();
     }
     else if (command == "cat-file")
     {

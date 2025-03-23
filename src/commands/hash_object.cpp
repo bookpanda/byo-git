@@ -124,31 +124,3 @@ void writeObjectFile(const std::string &hash, const std::string &compressedBlob)
     file.write(compressedBlob.data(), compressedBlob.size());
     // std::cout << "Object written to: " << filename << '\n';
 }
-
-void handleHashObject(int argc, char *argv[])
-{
-    if (!validateHashObjectArgs(argc, argv))
-        return;
-
-    std::string filePath = argv[2];
-    if (argc == 4)
-        filePath = argv[3];
-
-    const std::string flag = (argc == 4) ? argv[2] : "";
-    const std::string blob = createBlob(filePath);
-    const std::string hash = computeSHA1(blob);
-
-    // std::cout << "blob: " << blob << '\n';
-    std::cout << hash << '\n';
-
-    if (flag == "-w")
-    {
-        // compress blob content and write to .git/objects/<hash>
-        std::string compressedBlob = compressBlob(blob);
-        std::cout << "compressedBlob: " << compressedBlob << '\n';
-        if (!compressedBlob.empty())
-        {
-            writeObjectFile(hash, compressedBlob);
-        }
-    }
-}
