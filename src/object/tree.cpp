@@ -4,6 +4,9 @@
 #include <fstream>
 #include <algorithm>
 #include <zstr.hpp>
+#include <set>
+
+namespace fs = std::filesystem;
 
 std::vector<std::vector<std::string>> readTreeContent(const std::string &path)
 {
@@ -45,9 +48,15 @@ std::string createTree(const std::string &path, int depth)
 {
     try
     {
+        std::set<fs::directory_entry> sorted_by_name;
+        for (const auto &entry : fs::directory_iterator(path))
+        {
+            sorted_by_name.insert(entry);
+        }
+
         int treeSize = 0;
         std::vector<std::vector<std::string>> children;
-        for (const auto &entry : std::filesystem::directory_iterator(path))
+        for (const auto &entry : sorted_by_name)
         {
             std::string entryPath = entry.path().string();
             std::string entryName = entry.path().filename().string();
@@ -55,15 +64,15 @@ std::string createTree(const std::string &path, int depth)
             if (entryName == ".git")
                 continue;
 
-            std::cout << std::string(depth * 2, ' ') // Indentation for depth
-                      << (entry.is_directory() ? "[DIR]  " : "[FILE] ")
-                      << entryName << "\n";
+            // std::cout << std::string(depth * 2, ' ') // Indentation for depth
+            //           << (entry.is_directory() ? "[DIR]  " : "[FILE] ")
+            //           << entryName << ", namesize: " << entryName.size() << "\n";
 
             if (entry.is_directory())
             {
                 auto hash = createTree(entryPath, depth + 1);
                 children.push_back({"tree", entryName, hexToSHA1(hash)});
-                treeSize += 6 + 1 + entryName.size() + 1 + 20;
+                treeSize += 5 + 1 + entryName.size() + 1 + 20;
             }
             else
             {
@@ -81,7 +90,7 @@ std::string createTree(const std::string &path, int depth)
         for (const auto &child : children)
         {
             if (child[0] == "tree")
-                treeContent += "040000 " + child[1] + '\0' + child[2];
+                treeContent += "40000 " + child[1] + '\0' + child[2];
             else
                 treeContent += "100644 " + child[1] + '\0' + child[2];
         }
@@ -89,11 +98,11 @@ std::string createTree(const std::string &path, int depth)
         treeContent = "tree " + std::to_string(treeSize) + '\0' + treeContent;
         auto treeHash = computeSHA1(treeContent);
         writeObjectFile(treeHash, compressObject(treeContent));
-        std::cout << "treeContent: " << treeContent << "\n";
+        // std::cout << "treeContent: " << treeContent << "\n";
 
         return treeHash;
     }
-    catch (const std::filesystem::filesystem_error &err)
+    catch (const fs::filesystem_error &err)
     {
         std::cerr << "Error accessing path: " << err.what() << '\n';
         return "";

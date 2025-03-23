@@ -104,4 +104,37 @@ git read-tree --prefix=bak f03546f10f086a5cbc7b8580632ca6db2ba9411d
 git write-tree
 git cat-file -p ab265692497c92dd980963dd5bbfeb11d54189d9
 git ls-tree ab265692497c92dd980963dd5bbfeb11d54189d9 # same as above
+
+
+# writing a tree
+git init
+git add .
+git write-tree
+git ls-tree 0b6e66
+
+openssl zlib -d -in .git/objects/e1/79888d0f5f71d7c7c9bdd6c9d7a286f2de7772
+
+tree <size>\0
+40000 test_dir_1\0<sha>
+40000 test_dir_2\0<sha>
+100644 test_file_3.txt\0<sha>
+
+5 + 1 + 10 + 1 + 20
+5 + 1 + 10 + 1 + 20
+6 + 1 + 15 + 1 + 20
+
+
+tree 192\0
+40000 octopus-admin\0 a84943494657751ce187be401d6bf59ef7a2583c
+40000 octopus-deployment\0 14f589a30cf4bd0ce2d7103aa7186abe0167427f
+40000 octopus-product\0 ec559319a263bc7b476e5f01dd2578f255d734fd
+100644 pom.xml\0 97e5b6b292d248869780d7b0c65834bfb645e32a
+40000 src\0 6e63db37acba41266493ba8fb68c76f83f1bc9dd
+
+5 + 1 + 13 + 1 + 20
+5 + 1 + 18 + 1 + 20
+5 + 1 + 15 + 1 + 20
+6 + 1 + 7 + 1 + 20
+5 + 1 + 3 + 1 + 20
+192
 ```
