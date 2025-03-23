@@ -115,13 +115,16 @@ std::string commitTree(const std::string treeSHA, const std::string parentCommit
     if (!parentCommitHash.empty())
         commitContent += "parent " + parentCommitHash + '\n';
 
-    std::string author = "John Doe";
-    std::string committer = "John Doe";
+    std::string author = "John Doe <johndoe@gmail.com>";
+    std::string committer = "John Doe <johndoe@gmail.com>";
     commitContent += "author " + author + " 1234567890 +0000\n";
     commitContent += "committer " + committer + " 1234567890 +0000\n\n";
     commitContent += message + '\n';
 
-    auto commitHash = computeSHA1(commitContent);
-    writeObjectFile(commitHash, compressObject(commitContent));
+    size_t contentSize = commitContent.size();
+    std::string commitObject = "commit " + std::to_string(contentSize) + '\0' + commitContent;
+
+    auto commitHash = computeSHA1(commitObject);
+    writeObjectFile(commitHash, compressObject(commitObject));
     return commitHash;
 }

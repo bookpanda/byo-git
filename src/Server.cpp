@@ -39,6 +39,10 @@ int main(int argc, char *argv[])
     {
         handleWriteTree();
     }
+    else if (command == "commit-tree")
+    {
+        handleCommitTree(argc, argv);
+    }
     else
     {
         std::cerr << "Unknown command " << command << '\n';
