@@ -42,3 +42,18 @@ std::string computeSHA1(const std::string &blob)
 
     return hash_str.str();
 }
+
+std::string SHA1ToHex(const std::string &binarySha)
+{
+    static const char hexDigits[] = "0123456789abcdef";
+    std::string hexSha;
+    hexSha.reserve(40); // SHA1 hashes are 40 hex characters
+
+    for (unsigned char c : binarySha)
+    {
+        hexSha.push_back(hexDigits[(c >> 4) & 0xF]);
+        hexSha.push_back(hexDigits[c & 0xF]);
+    }
+
+    return hexSha;
+}

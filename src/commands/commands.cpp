@@ -2,6 +2,7 @@
 #include "../init/init.hpp"
 #include "../object/object.hpp"
 #include "validate.hpp"
+#include <vector>
 
 void handleInitGit()
 {
@@ -63,5 +64,10 @@ void handleLsTree(int argc, char *argv[])
 
     const std::string flag = (argc == 4) ? argv[2] : "";
     const std::string path = getObjectPath(treeHash);
-    const std::string object_str = readTreeContent(path);
+    const std::vector<std::vector<std::string>> treeContent = readTreeContent(path);
+
+    for (int i = 0; i < treeContent.size(); i++)
+    {
+        std::cout << treeContent[i][2] << "\n";
+    }
 }
