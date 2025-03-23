@@ -13,13 +13,13 @@ void handleCatFile(int argc, char *argv[])
     if (!validateCatFileArgs(argc, argv))
         return;
 
-    const std::string value = argv[3];
-    const std::string path = extractObjectSHA(value);
-    const std::string object_str = readBlobContent(path);
+    const std::string hash = argv[3];
+    const std::string path = getObjectPath(hash);
+    const std::string blobContent = readBlobContent(path);
 
-    if (!object_str.empty())
+    if (!blobContent.empty())
     {
-        const auto object_content = object_str.substr(object_str.find('\0') + 1);
+        const auto object_content = blobContent.substr(blobContent.find('\0') + 1);
         std::cout << object_content << std::flush;
     }
 }
@@ -57,11 +57,11 @@ void handleLsTree(int argc, char *argv[])
     if (!validateLsTreeArgs(argc, argv))
         return;
 
-    std::string treeSHA = argv[2];
+    std::string treeHash = argv[2];
     if (argc == 4)
-        treeSHA = argv[3];
+        treeHash = argv[3];
 
     const std::string flag = (argc == 4) ? argv[2] : "";
-    const std::string path = extractObjectSHA(treeSHA);
+    const std::string path = getObjectPath(treeHash);
     const std::string object_str = readTreeContent(path);
 }

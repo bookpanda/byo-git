@@ -4,7 +4,7 @@
 #include <iostream>
 
 // object
-std::string extractObjectSHA(const std::string &value);
+std::string getObjectPath(const std::string &hash);
 void writeObjectFile(const std::string &hash, const std::string &compressedBlob);
 
 // blob

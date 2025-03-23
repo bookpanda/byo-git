@@ -31,6 +31,10 @@ int main(int argc, char *argv[])
     {
         handleHashObject(argc, argv);
     }
+    else if (command == "ls-tree")
+    {
+        handleLsTree(argc, argv);
+    }
     else
     {
         std::cerr << "Unknown command " << command << '\n';

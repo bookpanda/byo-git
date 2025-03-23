@@ -5,10 +5,10 @@
 #include <zstr.hpp>
 #include <algorithm>
 
-std::string extractObjectSHA(const std::string &value)
+std::string getObjectPath(const std::string &hash)
 {
-    const std::string dirName = value.substr(0, 2);
-    const std::string blobSHA = value.substr(2);
+    const std::string dirName = hash.substr(0, 2);
+    const std::string blobSHA = hash.substr(2);
     return ".git/objects/" + dirName + "/" + blobSHA;
 }
 
