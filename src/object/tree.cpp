@@ -108,3 +108,20 @@ std::string createTree(const std::string &path, int depth)
         return "";
     }
 }
+
+std::string commitTree(const std::string treeSHA, const std::string parentCommitHash, const std::string message)
+{
+    std::string commitContent = "tree " + treeSHA + '\n';
+    if (!parentCommitHash.empty())
+        commitContent += "parent " + parentCommitHash + '\n';
+
+    std::string author = "John Doe";
+    std::string committer = "John Doe";
+    commitContent += "author " + author + " 1234567890 +0000\n";
+    commitContent += "committer " + committer + " 1234567890 +0000\n\n";
+    commitContent += message + '\n';
+
+    auto commitHash = computeSHA1(commitContent);
+    writeObjectFile(commitHash, compressObject(commitContent));
+    return commitHash;
+}

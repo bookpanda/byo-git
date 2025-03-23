@@ -92,4 +92,13 @@ void handleCommitTree(int argc, char *argv[])
 {
     if (!validateCommitTree(argc, argv))
         return;
+
+    const std::string treeSHA = argv[2];
+    const std::string parentCommitSHA = argv[4];
+    const std::string message = argv[6];
+
+    const std::string commitHash = commitTree(treeSHA, parentCommitSHA, message);
+    std::cout << commitHash << '\n';
+
+    return;
 }

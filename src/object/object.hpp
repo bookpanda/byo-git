@@ -15,6 +15,7 @@ std::string createBlob(const std::string &filePath);
 // tree
 std::vector<std::vector<std::string>> readTreeContent(const std::string &path);
 std::string createTree(const std::string &path, int depth = 0);
+std::string commitTree(const std::string treeSHA, const std::string parentCommitHash, const std::string message);
 
 // compress
 std::string decompressObject(const std::string &compressedData);
