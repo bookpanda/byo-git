@@ -145,6 +145,7 @@ void handleHashObject(int argc, char *argv[])
     {
         // compress blob content and write to .git/objects/<hash>
         std::string compressedBlob = compressBlob(blob);
+        std::cout << "compressedBlob: " << compressedBlob << '\n';
         if (!compressedBlob.empty())
         {
             writeObjectFile(hash, compressedBlob);
