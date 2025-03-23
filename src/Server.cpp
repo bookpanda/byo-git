@@ -1,11 +1,5 @@
 #include <iostream>
-#include <filesystem>
-#include <fstream>
-#include <string>
-#include "./commands/init.hpp"
-#include "./commands/cat_file.hpp"
-#include "./commands/hash_object.hpp"
-#include <zstr.hpp>
+#include "./commands/commands.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -27,7 +21,7 @@ int main(int argc, char *argv[])
 
     if (command == "init")
     {
-        initializeGit();
+        handleInitGit();
     }
     else if (command == "cat-file")
     {
@@ -36,6 +30,18 @@ int main(int argc, char *argv[])
     else if (command == "hash-object")
     {
         handleHashObject(argc, argv);
+    }
+    else if (command == "ls-tree")
+    {
+        handleLsTree(argc, argv);
+    }
+    else if (command == "write-tree")
+    {
+        handleWriteTree();
+    }
+    else if (command == "commit-tree")
+    {
+        handleCommitTree(argc, argv);
     }
     else
     {
