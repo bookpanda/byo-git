@@ -66,8 +66,24 @@ void handleLsTree(int argc, char *argv[])
     const std::string path = getObjectPath(treeHash);
     const std::vector<std::vector<std::string>> treeContent = readTreeContent(path);
 
-    for (int i = 0; i < treeContent.size(); i++)
+    if (flag == "--name-only")
     {
-        std::cout << treeContent[i][2] << "\n";
+        for (int i = 0; i < treeContent.size(); i++)
+        {
+            std::cout << treeContent[i][2] << "\n";
+        }
     }
+    else
+    {
+        for (int i = 0; i < treeContent.size(); i++)
+        {
+            std::cout << treeContent[i][0] << " " << treeContent[i][1] << " " << treeContent[i][2] << "\n";
+        }
+    }
+}
+
+void handleWriteTree()
+{
+    const std::string treeHash = createTree(".");
+    std::cout << treeHash << '\n';
 }

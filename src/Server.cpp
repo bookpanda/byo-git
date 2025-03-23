@@ -35,6 +35,10 @@ int main(int argc, char *argv[])
     {
         handleLsTree(argc, argv);
     }
+    else if (command == "write-tree")
+    {
+        handleWriteTree();
+    }
     else
     {
         std::cerr << "Unknown command " << command << '\n';
