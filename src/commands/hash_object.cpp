@@ -5,25 +5,6 @@
 #include <iomanip>
 #include <filesystem>
 
-bool validateHashObjectArgs(int argc, char *argv[])
-{
-    if (argc <= 2)
-    {
-        std::cerr << "Usage: <program> hash-object <file>\n";
-        return false;
-    }
-    if (argc == 4)
-    {
-        const std::string flag = argv[2];
-        if (flag != "-w")
-        {
-            std::cerr << "Invalid flag for hash-object, expected `-w`\n";
-            return false;
-        }
-    }
-    return true;
-}
-
 std::string createBlob(const std::string &filePath)
 {
     std::ifstream file(filePath, std::ios::binary);

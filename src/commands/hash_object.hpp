@@ -3,7 +3,6 @@
 
 #include <iostream>
 
-bool validateHashObjectArgs(int argc, char *argv[]);
 std::string createBlob(const std::string &filePath);
 std::string computeSHA1(const std::string &blob);
 std::string compressBlob(const std::string &blob);

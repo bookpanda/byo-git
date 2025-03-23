@@ -2,6 +2,7 @@
 #include "../init/init.hpp"
 #include "cat_file.hpp"
 #include "hash_object.hpp"
+#include "validate.hpp"
 
 void handleInitGit()
 {
@@ -11,9 +12,7 @@ void handleInitGit()
 void handleCatFile(int argc, char *argv[])
 {
     if (!validateCatFileArgs(argc, argv))
-    {
         return;
-    }
 
     const std::string value = argv[3];
     const std::string path = extractBlobSHA(value);
@@ -52,4 +51,18 @@ void handleHashObject(int argc, char *argv[])
             writeObjectFile(hash, compressedBlob);
         }
     }
+}
+
+void handleLsTree(int argc, char *argv[])
+{
+    if (!validateLsTreeArgs(argc, argv))
+        return;
+
+    std::string treeSHA = argv[2];
+    if (argc == 4)
+        treeSHA = argv[3];
+
+    const std::string flag = (argc == 4) ? argv[2] : "";
+    const std::string path = extractBlobSHA(treeSHA);
+    const std::string object_str = readObjectContent(path);
 }

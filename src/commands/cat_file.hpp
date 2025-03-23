@@ -3,9 +3,7 @@
 
 #include <iostream>
 
-bool validateCatFileArgs(int argc, char *argv[]);
 std::string extractBlobSHA(const std::string &value);
-
 std::string readObjectContent(const std::string &path);
 std::string readTreeContent(const std::string &path);
 

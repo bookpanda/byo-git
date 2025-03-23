@@ -5,28 +5,6 @@
 #include <zstr.hpp>
 #include <algorithm>
 
-void printUsage()
-{
-    std::cerr << "Usage: <program> cat-file -p <blob_sha>\n";
-}
-
-bool validateCatFileArgs(int argc, char *argv[])
-{
-    if (argc <= 3)
-    {
-        printUsage();
-        return false;
-    }
-
-    const std::string flag = argv[2];
-    if (flag != "-p")
-    {
-        std::cerr << "Invalid flag for cat-file, expected `-p`\n";
-        return false;
-    }
-    return true;
-}
-
 std::string extractBlobSHA(const std::string &value)
 {
     const std::string dirName = value.substr(0, 2);
